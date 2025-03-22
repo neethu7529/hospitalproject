@@ -1,0 +1,52 @@
+{% extends 'layout/app-layout.html' %}
+
+{% block title %}
+Doctor Details
+{% endblock %}
+
+{% block 'content' %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">Doctor Details</h1>
+
+    <!-- Doctor Details Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Image</th>
+                    <th>Department</th>
+                    <th>Qualification</th>
+                    <th>Experience (Years)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center">
+                    <td>{{ doctor.name }}</td>
+                    <td>
+                        {% if doctor.display_picture %}
+                            <img src="{{ doctor.display_picture.url }}" alt="Doctor Image" class="img-thumbnail" style="width: 80px; height: 80px;">
+                        {% else %}
+                            <span>No Image</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ doctor.department }}</td>
+                    <td>{{ doctor.Qualification }}</td>
+                    <td>{{ doctor.Experience }}</td>
+                    <td>
+                        <a href="{% url 'edit_doctor' doctor.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        {% if not doctor.is_active %}
+        <a href="{% url 'enable_doctor' doctor.id %}" class="btn btn-success btn-sm">Enable</a>
+    {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'doctor_list' %}" class="btn btn-primary">Return to Doctor List</a>
+    </div>
+</div>
+{% endblock %}

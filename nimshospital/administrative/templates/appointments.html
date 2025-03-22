@@ -1,0 +1,56 @@
+{% extends 'layout/app-layout.html' %}
+
+{% block 'content' %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container py-4">
+    <div class="navbar bg-secondary text-white text-center py-3 rounded">
+        <h1 class="m-0">Appointment List</h1>
+    </div>
+
+    <form method="get" action="{% url 'appointments' %}">
+        <div class="filters d-flex flex-column flex-md-row justify-content-between align-items-center bg-white shadow-sm rounded p-3 my-4">
+            <div class="mb-3 mb-md-0">
+                <label for="filterDate" class="form-label">Filter by Date:</label>
+                <input type="date" id="filterDate" name="filterDate" class="form-control" value="{{ request.GET.filterDate }}">
+            </div>
+
+            <div>
+                <label for="filterDoctor" class="form-label">Filter by Doctor:</label>
+                <select id="filterDoctor" name="filterDoctor" class="form-select">
+                    <option value="">Select a Doctor</option>
+                    {% for doctor in doctors %}
+                        <option value="{{ doctor.id }}" {% if request.GET.filterDoctor == doctor.id|stringformat:"s" %}selected{% endif %}>
+                            {{ doctor.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply Filters</button>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead class="table-primary">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Doctor Name</th>
+                    <th>Department</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentsList">
+                {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.user.name }}</td>
+                        <td>{{ appointment.doctor.name }}</td>
+                        <td>{{ appointment.doctor.department }}</td>
+                        <td>{{ appointment.appointment_time }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

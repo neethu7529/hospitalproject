@@ -1,0 +1,49 @@
+{% extends 'layout/app-layout.html' %}
+
+{% block 'content' %}
+<div class="container my-5">
+    <!-- Doctor List Section -->
+    <h2 class="mb-4 text-center">Doctor List</h2>
+    
+    <div class="d-flex justify-content-end mb-4">
+        <a href="{% url 'adddoctor' %}" style="text-decoration: none;">
+            <button class="btn btn-primary">Add New Doctor</button>
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th class="p-3">ID</th>
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr>
+                    <td class="p-3">{{ doctor.id }}</td>
+                    <td class="p-3">{{ doctor.name }}</td>
+                    <td class="p-3">
+                        <a href="{% url 'doctor_details' doctor.id %}" style="text-decoration: none;">
+                            <button class="btn btn-primary">View</button>
+                        </a>
+            
+                        <a href="{% url 'edit_doctor' doctor.id %}" style="text-decoration: none;">
+                            <button class="btn btn-success">Edit</button>
+                        </a>
+            
+                        {% if doctor.is_active %}
+        <a href="{% url 'disable_doctor' doctor.id %}" class="btn btn-danger">Disable</a>
+    {% else %}
+        <span class="text-muted">Disabled</span> <!-- Show text instead of button -->
+    {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

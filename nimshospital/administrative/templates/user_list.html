@@ -1,0 +1,32 @@
+{% extends 'layout/app-layout.html' %}
+
+{% block title %}
+User List
+{% endblock %}
+
+{% block 'content' %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">User List</h1>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <a href="{% url 'user_details' user.id %}" class="btn btn-primary">Check Details</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

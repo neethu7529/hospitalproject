@@ -1,0 +1,21 @@
+{% extends "layout/app-layout.html" %}
+
+{% block 'content' %}
+  <div class="container mt-5">
+    <div class="card shadow-lg p-4">
+      {% if user.is_authenticated %}
+        <div class="alert alert-success text-center" role="alert">
+          You are currently logged in as <strong>{{ user.username }}</strong>.
+        </div>
+        <form method="post" class="text-center">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Log Out</button>
+        </form>
+      {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+          You are not currently logged in.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
